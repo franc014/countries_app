@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import fetch from "isomorphic-unfetch";
+
 import Autocomplete from "../components/Autocomplete";
 import RegionChooser from "../components/RegionChooser";
 import Countries from "../components/Countries";

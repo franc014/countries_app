@@ -48,7 +48,7 @@ const Card = ({ country }) => {
       <img src={country.flag} alt="ecuador" />
       <CardDetailStyles>
         <p className="card-title">
-          <Link href={`country?countryCode=${country.numericCode}`}>
+          <Link href={`country?callingCode=${country.callingCodes}`}>
             <a>{country.name}</a>
           </Link>
         </p>
