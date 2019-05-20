@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Link from "next/link";
 
 import styled from "styled-components";
@@ -42,30 +42,35 @@ const CardDetailStyles = styled.div`
   }
 `;
 
-const Card = ({ country }) => {
-  return (
-    <CardStyles>
-      <img src={country.flag} alt="ecuador" />
-      <CardDetailStyles>
-        <p className="card-title">
-          <Link href={`country?callingCode=${country.callingCodes}`}>
-            <a>{country.name}</a>
-          </Link>
-        </p>
-        <div className="card-data">
-          <p>
-            <span>Population:</span> {country.population}
+class Card extends Component {
+  render() {
+    const country = this.props.country;
+    return (
+      <CardStyles>
+        <img src={country.flag} alt="ecuador" />
+        <CardDetailStyles>
+          <p className="card-title">
+            <Link href={`country?callingCode=${country.callingCodes}`}>
+              <a>{country.name}</a>
+            </Link>
           </p>
-          <p>
-            <span>Region:</span> {country.region}
-          </p>
-          <p>
-            <span>Capital:</span> {country.capital}
-          </p>
-        </div>
-      </CardDetailStyles>
-    </CardStyles>
-  );
-};
+          <div className="card-data">
+            <p>
+              <span>Population:</span> {country.population}
+            </p>
+            <p>
+              <span>Region:</span> {country.region}
+            </p>
+            <p>
+              <span>Capital:</span> {country.capital}
+            </p>
+
+            {this.props.children(country)}
+          </div>
+        </CardDetailStyles>
+      </CardStyles>
+    );
+  }
+}
 
 export default Card;

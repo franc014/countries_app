@@ -10,7 +10,11 @@ class Countries extends Component {
     return (
       <>
         {countries.map(country => {
-          return <Card key={country.name} country={country} />;
+          return (
+            <Card key={country.name} country={country}>
+              {() => {}}
+            </Card>
+          );
         })}
       </>
     );
