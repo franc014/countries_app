@@ -65,6 +65,29 @@ const Search = styled.div`
     font-family: ${props => props.theme.fonts.font_family_normal};
     font-size: 0.8rem;
   }
+
+  .result-list {
+    list-style-type: none;
+    padding: 0;
+
+    background-color: ${props => props.theme.colors.gray_dark_lighter};
+    position: absolute;
+    top: 68%;
+    margin-left: 6%;
+    margin-top: 23px;
+    width: 50%;
+    max-width: 50%;
+    border: 1px solid ${props => props.theme.colors.gray_dark_lighter};
+    li {
+      background-color: ${props => props.theme.colors.gray_dark_lighter};
+      height: 40px;
+      margin: 0;
+      padding: 10px;
+      & :hover {
+        background-color: ${props => props.theme.colors.gray_dark};
+      }
+    }
+  }
 `;
 
 export default Search;
