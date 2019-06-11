@@ -4,6 +4,7 @@ import sharedStyles from "./SharedStyles";
 const Search = styled.div`
   position: relative;
   margin-bottom: 20px;
+
   & .search-icon {
     position: absolute;
     top: 38%;
@@ -70,22 +71,28 @@ const Search = styled.div`
     list-style-type: none;
     padding: 0;
 
-    background-color: ${props => props.theme.colors.gray_dark_lighter};
+    background: ${props => props.theme.colors.gray_dark_lighter};
     position: absolute;
     top: 68%;
     margin-left: 6%;
     margin-top: 23px;
     width: 50%;
     max-width: 50%;
-    border: 1px solid ${props => props.theme.colors.gray_dark_lighter};
+    border: 1px solid ${props => props.theme.colors.gray_dark_lght};
+    border-radius: 10px;
     li {
-      background-color: ${props => props.theme.colors.gray_dark_lighter};
+      & :last-child {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+      & :first-child {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+
       height: 40px;
       margin: 0;
-      padding: 10px;
-      & :hover {
-        background-color: ${props => props.theme.colors.gray_dark};
-      }
+      padding: 10px 20px 40px 20px;
     }
   }
 `;

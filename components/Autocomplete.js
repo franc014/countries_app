@@ -1,14 +1,31 @@
 import React, { Component } from "react";
-
+import Router from "next/router";
 import SearchIcon from "../components/icons/Search";
 import Search from "../components/styled/Search";
-import DownShift from "downshift";
+import DownShift, { resetIdCounter } from "downshift";
+import debounce from "lodash.debounce";
+import styled from "styled-components";
+
+const ResulItemStyle = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    margin-right: 10px;
+  }
+`;
 
 class Autocomplete extends Component {
   state = {
     countries: []
   };
-  findCountry = async e => {
+  redirectToDetail = selection => {
+    Router.push({
+      pathname: "/country",
+      query: { callingCode: selection }
+    });
+  };
+
+  findCountry = debounce(async e => {
     const res = await fetch(
       `https://restcountries.eu/rest/v2/name/${e.target.value}`
     );
@@ -17,13 +34,15 @@ class Autocomplete extends Component {
     });
 
     this.setState({ countries });
-  };
+  }, 350);
+
   render() {
+    resetIdCounter();
     const countries = this.state.countries;
-    console.log(countries);
+
     return (
       <DownShift
-        onChange={selection => console.log(`You selected ${selection.name}`)}
+        onChange={selection => this.redirectToDetail(selection.callingCodes)}
         itemToString={item => (item ? item.name : "")}
       >
         {({
@@ -43,13 +62,18 @@ class Autocomplete extends Component {
                 <input
                   type="search"
                   placeholder="Search for a country"
-                  {...getInputProps({ onChange: this.findCountry })}
+                  {...getInputProps({
+                    onChange: e => {
+                      e.persist();
+                      this.findCountry(e);
+                    }
+                  })}
                 />
-                {countries && (
+                {countries && countries.length > 0 && (
                   <ul
                     className="result-list"
                     onChange={selection =>
-                      console.log(`You selected ${selection.name}`)
+                      this.redirectToDetail(selection.name)
                     }
                     {...getMenuProps()}
                   >
@@ -64,14 +88,21 @@ class Autocomplete extends Component {
                                 style: {
                                   backgroundColor:
                                     highlightedIndex === index
-                                      ? "lightgray"
+                                      ? "rgba(0, 0, 0, 0.1)"
                                       : "white",
                                   fontWeight:
                                     selectedItem === country ? "bold" : "normal"
                                 }
                               })}
                             >
-                              {country.name}
+                              <ResulItemStyle>
+                                <img
+                                  width="30"
+                                  src={country.flag}
+                                  alt={country.name}
+                                />
+                                {country.name}
+                              </ResulItemStyle>
                             </li>
                           );
                         })

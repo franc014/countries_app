@@ -1,21 +1,26 @@
 import React, { Component } from "react";
+import Router from "next/router";
 import DownShift from "downshift";
 
 class DropDown extends Component {
+  redirectToDetail(selection) {
+    Router.push({
+      pathname: "/country",
+      query: { name: selection }
+    });
+  }
   render() {
     const countries = this.props.countries;
     return (
       <DownShift
-        onChange={selection => console.log(`You selected ${selection.name}`)}
+        onChange={selection => this.redirectToDetail(selection)}
         itemToString={item => (item ? item.name : "")}
       >
         {({ inputValue, highlightedIndex, selectedItem, getItemProps }) => {
           return (
             <ul
               className="result-list"
-              onChange={selection =>
-                console.log(`You selected ${selection.name}`)
-              }
+              onChange={selection => this.redirectToDetail(selection)}
             >
               {countries.map((country, i) => {
                 return (
