@@ -1,5 +1,6 @@
 import App, { Container } from "next/app";
 import Layout from "../components/Page";
+import AppConfigProvider from "../components/context/AppConfigProvider";
 
 class CountriesApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -17,9 +18,11 @@ class CountriesApp extends App {
 
     return (
       <Container>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <AppConfigProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </AppConfigProvider>
       </Container>
     );
   }

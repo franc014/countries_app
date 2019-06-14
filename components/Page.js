@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-
+import { appConfigContext } from "./context/AppConfigProvider";
 import Header from "./Header";
 
 const theme = {
@@ -51,7 +51,8 @@ html{
     box-sizing:inherit;
   }
   body{
-    background:${theme.colors.white};
+    background:${props =>
+      !props.nightMode ? theme.colors.white : theme.colors.blue_dark};
     margin:0;
     padding:0;
     font-size:1rem; /*1.5rem from the base font: 10px*/
@@ -80,15 +81,28 @@ html{
 `;
 
 class Layout extends Component {
+  componentDidMount() {
+    console.log("cont", this.context);
+    /* realiza un efecto secundario en el montaje utilizando el valor de MyContext */
+  }
+  state = {
+    nightMode: false
+  };
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <>
-          <GlobalStyle />
-          <Header />
-          <main className="container">{this.props.children}</main>
-        </>
-      </ThemeProvider>
+      <appConfigContext.Consumer>
+        {context => {
+          return (
+            <ThemeProvider theme={theme}>
+              <>
+                <GlobalStyle nightMode={context.state.nightMode} />
+                <Header />
+                <main className="container">{this.props.children}</main>
+              </>
+            </ThemeProvider>
+          );
+        }}
+      </appConfigContext.Consumer>
     );
   }
 }
