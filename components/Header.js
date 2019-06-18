@@ -1,10 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 
 import styled from "styled-components";
 import MoonIcon from "./icons/MoonIcon";
+import { appConfigContext } from "./context/AppConfigProvider";
 
 const HeaderStyles = styled.header`
   box-shadow: ${props => props.theme.shadow};
+  background: ${props => {
+    console.log("prpo", props);
+    return !props.nightMode
+      ? props.theme.colors.white
+      : props.theme.colors.blue;
+  }};
 
   margin-bottom: 20px;
   .header-wrapper {
@@ -30,18 +37,22 @@ const HeaderStyles = styled.header`
   }
 `;
 
-const Header = () => {
-  return (
-    <HeaderStyles>
-      <div className="container header-wrapper">
-        <p>Where in the world?</p>
-        <div className="theme-switch">
-          <MoonIcon />
-          <p>Dark Mode</p>
+class Header extends Component {
+  static contextType = appConfigContext;
+
+  render() {
+    return (
+      <HeaderStyles nightMode={this.context.state.nightMode}>
+        <div className="container header-wrapper">
+          <p>Where in the world?</p>
+          <div className="theme-switch">
+            <MoonIcon nightMode={this.context.state.nightMode} />
+            <p>Dark Mode</p>
+          </div>
         </div>
-      </div>
-    </HeaderStyles>
-  );
-};
+      </HeaderStyles>
+    );
+  }
+}
 
 export default Header;

@@ -57,18 +57,17 @@ html{
     padding:0;
     font-size:1rem; /*1.5rem from the base font: 10px*/
     line-height:2;
-    font-family:${theme.fonts.font_family_normal}
+    font-family:${theme.fonts.font_family_normal};
+    color:${props =>
+      !props.nightMode ? theme.colors.gray_light : theme.colors.white};
   }
    a {
     text-decoration: none;
-    color: ${
-      theme.black
-    }; /*can not access props, instead we have to use the theme object directly*/
+    color: ${props =>
+      !props.nightMode ? theme.colors.gray_light : theme.colors.white};
   }
 
-  .kk{
-    margin-left:20px;
-  }
+  
 
  
 }
@@ -81,28 +80,16 @@ html{
 `;
 
 class Layout extends Component {
-  componentDidMount() {
-    console.log("cont", this.context);
-    /* realiza un efecto secundario en el montaje utilizando el valor de MyContext */
-  }
-  state = {
-    nightMode: false
-  };
+  static contextType = appConfigContext;
   render() {
     return (
-      <appConfigContext.Consumer>
-        {context => {
-          return (
-            <ThemeProvider theme={theme}>
-              <>
-                <GlobalStyle nightMode={context.state.nightMode} />
-                <Header />
-                <main className="container">{this.props.children}</main>
-              </>
-            </ThemeProvider>
-          );
-        }}
-      </appConfigContext.Consumer>
+      <ThemeProvider theme={theme}>
+        <>
+          <GlobalStyle nightMode={this.context.state.nightMode} />
+          <Header />
+          <main className="container">{this.props.children}</main>
+        </>
+      </ThemeProvider>
     );
   }
 }
