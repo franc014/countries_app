@@ -21,7 +21,7 @@ const theme = {
     white: "hsl(0, 0%, 100%)"
   },
   spaces: {},
-  shadow: `0 2px 4px 0 rgba(0, 0, 0, 0.1)`,
+  shadow: `0 2px 8px 0 rgba(0, 0, 0, 0.1)`,
   rounded_border: ".25rem"
 };
 
@@ -67,16 +67,11 @@ html{
       !props.nightMode ? theme.colors.gray_light : theme.colors.white};
   }
 
-  
-
- 
 }
 .container {
   width:90%;
   margin:0 auto;
-  
 }
-
 `;
 
 class Layout extends Component {

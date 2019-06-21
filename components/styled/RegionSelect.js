@@ -2,17 +2,22 @@ import styled from "styled-components";
 import sharedStyles from "./SharedStyles";
 
 const RegionSelect = styled.select`
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+  flex: 1 1 20%;
+
   display: block;
   height: 100%;
   padding: 20px;
-  width: 60%;
+
   margin: 35px 0;
   border: 1px solid ${props => props.theme.colors.gray_light};
   box-sizing: border-box;
-  background: white;
+
   background-image: url("/static/svg/arrow-down.svg");
-  background-repeat: no-repeat;
-  background-position: 92% 50%;
+
+  background-position: 12% 10%;
   ${sharedStyles}
 
   & :-ms-expand {

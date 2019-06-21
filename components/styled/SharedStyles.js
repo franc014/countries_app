@@ -8,6 +8,10 @@ const searchStyles = css`
   padding: 16px 0 16px 60px;
   font-family: ${props => props.theme.fonts.font_family_light};
   letter-spacing: 1px;
+  background: ${props =>
+    !props.nightMode ? props.theme.colors.white : props.theme.colors.blue};
+  color: ${props =>
+    props.nightMode ? props.theme.colors.white : props.theme.colors.blue};
 `;
 
 export default searchStyles;

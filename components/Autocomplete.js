@@ -5,16 +5,19 @@ import Search from "../components/styled/Search";
 import DownShift, { resetIdCounter } from "downshift";
 import debounce from "lodash.debounce";
 import styled from "styled-components";
+import { appConfigContext } from "./context/AppConfigProvider";
 
 const ResulItemStyle = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   img {
     margin-right: 10px;
   }
 `;
 
 class Autocomplete extends Component {
+  static contextType = appConfigContext;
   state = {
     countries: []
   };
@@ -56,7 +59,7 @@ class Autocomplete extends Component {
         }) => {
           return (
             <div>
-              <Search>
+              <Search nightMode={this.context.state.nightMode}>
                 <SearchIcon />
 
                 <input
