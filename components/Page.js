@@ -66,6 +66,9 @@ html{
     color: ${props =>
       !props.nightMode ? theme.colors.gray_light : theme.colors.white};
   }
+  h1 {
+    font-size:1.5rem;
+  }
 
 }
 .container {

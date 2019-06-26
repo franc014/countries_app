@@ -1,16 +1,22 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import fetch from "isomorphic-unfetch";
-import Card from "../components/Card";
+
 import styled from "styled-components";
 import { appConfigContext } from "../components/context/AppConfigProvider";
 
 const CountryPageStyles = styled.div`
   max-width: 400px;
   margin: 40px auto;
-  @media (min-width: 700px) {
+  @media (min-width: 600px) {
     max-width: 600px;
   }
+
+  @media (min-width: 912px) {
+    max-width: 1200px;
+    margin: 40px auto;
+  }
+
   .back-btn {
     background: ${props =>
       props.nightMode ? props.theme.colors.blue : props.theme.colors.white};
@@ -35,34 +41,99 @@ const CountryPageStyles = styled.div`
     box-shadow: ${props => props.theme.shadow};
   }
 
-  & .aditional-data {
-    margin-top: 40px;
-    .border-section {
-      p {
-        font-family: ${props => props.theme.fonts.font_family_bold};
-      }
-      margin: 40px 0 0;
-    }
-    .border-list {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
+  & .country-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 
-      .border {
-        background: ${props =>
-          props.nightMode ? props.theme.colors.blue : props.theme.colors.white};
-        flex: 1 1 auto;
-        margin: 5px 5px;
-        border: 1px solid ${props => props.theme.colors.gray_light};
-        padding: 5px 10px;
-        border-radius: 5px;
-        text-align: center;
-        box-shadow: ${props => props.theme.shadow};
+    img {
+      display: block;
+      width: 350px;
+      height: 280px;
+      flex: 1 1 auto;
+      margin: 0 auto;
+      @media (min-width: 912px) {
+        margin-right: 60px;
+      }
+    }
+    & .country-info {
+      padding: 20px;
+      width: 50%;
+      flex: 1 1 auto;
+      /* width: 550px; */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      h1 {
+        margin: 0;
+        padding: 0;
         color: ${props =>
-          !props.nightMode
-            ? props.theme.colors.blue
-            : props.theme.colors.white};
+          props.nightMode ? props.theme.colors.white : props.theme.colors.blue};
+      }
+
+      &-details {
+        display: flex;
+        justify-content: space-between;
+        color: black;
+        flex-wrap: wrap;
+
+        p {
+          line-height: 15px;
+          color: ${props =>
+            props.nightMode
+              ? props.theme.colors.white
+              : props.theme.colors.blue};
+          font-family: ${props => props.theme.fonts.font_family_light};
+          span {
+            font-family: ${props => props.theme.fonts.font_family_normal};
+          }
+        }
+        &-main-data {
+          margin-right: 80px;
+          flex: 1 1 auto;
+        }
+
+        &-add-data {
+          flex: 1 1 auto;
+        }
+      }
+
+      &-borders {
+        p {
+          color: ${props =>
+            props.nightMode
+              ? props.theme.colors.white
+              : props.theme.colors.blue};
+          line-height: 0;
+        }
+        .borders {
+          display: flex;
+          flex-wrap: wrap;
+          .border {
+            flex: 1 1 auto;
+            border: 1px solid
+              ${props =>
+                !props.nightMode
+                  ? props.theme.colors.gray_light
+                  : props.theme.colors.blue_dark};
+            margin-top: 10px;
+            margin-right: 10px;
+            background: ${props =>
+              !props.nightMode
+                ? props.theme.colors.white
+                : props.theme.colors.blue};
+            box-shadow: ${props => props.theme.shadow};
+            padding: 0 5px;
+            border-radius: 5px;
+            text-align: center;
+            color: ${props =>
+              props.nightMode
+                ? props.theme.colors.white
+                : props.theme.colors.blue};
+          }
+        }
       }
     }
   }
@@ -117,67 +188,71 @@ class country extends Component {
           </div>
         </Link>
 
-        <Card country={country}>
-          {() => {
-            return (
-              <>
-                <div className="main-data">
-                  <p>
-                    <span>Population:</span> {country.population}
-                  </p>
-                  <p>
-                    <span>Region:</span> {country.region}
-                  </p>
-                  <p>
-                    <span>Subregion:</span> {country.subregion}
-                  </p>
-                  <p>
-                    <span>Capital:</span> {country.capital}
-                  </p>
+        <div className="country-card">
+          {<img src={country.flag} alt={country.name} />}
+          <div className="country-info">
+            <h1>{country.name}</h1>
+            <div className="country-info-details">
+              <div className="country-info-details-main-data">
+                <p>
+                  <span>Native Name: </span> {country.nativeName}
+                </p>
+                <p>
+                  <span>Population: </span> {country.population}
+                </p>
+                <p>
+                  <span>Region: </span> {country.region}
+                </p>
+                <p>
+                  <span>Subregion: </span> {country.subregion}
+                </p>
+                <p>
+                  <span>Capital: </span> {country.capital}
+                </p>
+              </div>
+              <div className="country-info-details-add-data">
+                <p>
+                  <span>Top Level Domain: </span> {country.topLevelDomain}
+                </p>
+                <p>
+                  <span>Currencies: </span>
+                  {country.currencies.map((currency, i) => {
+                    if (i == country.currencies.length - 1) {
+                      return <span key={i}>{currency.name} </span>;
+                    }
+                    return <span key={i}>{currency.name}, </span>;
+                  })}
+                </p>
+                <p>
+                  <span>Languages: </span>
+                  {country.languages.map((language, i) => {
+                    if (i == country.languages.length - 1) {
+                      return <span key={i}>{language.name} </span>;
+                    }
+                    return <span key={i}>{language.name}, </span>;
+                  })}
+                </p>
+              </div>
+            </div>
+            {borders.length > 0 && (
+              <div className="country-info-borders">
+                <p>Border countries:</p>
+                <div className="borders">
+                  {borders.map((border, i) => {
+                    return (
+                      <Link
+                        key={i}
+                        href={`country?callingCode=${border.callingCodes}`}
+                      >
+                        <a className="border">{border.name}</a>
+                      </Link>
+                    );
+                  })}
                 </div>
-                <div className="aditional-data">
-                  <p>
-                    <span>Top level domain:</span> {country.topLevelDomain}
-                  </p>
-
-                  <p>
-                    <span>Currencies:</span> {country.currencies[0].name}
-                  </p>
-
-                  <p>
-                    <span>Languages: </span>
-
-                    {country.languages.map((lan, i) => {
-                      if (i === country.languages.length - 1) {
-                        return <span key={lan.name}>{lan.name} </span>;
-                      }
-                      return <span key={lan.name}>{lan.name}, </span>;
-                    })}
-                  </p>
-                  {borders.length > 0 && (
-                    <div className="border-section">
-                      <p>Border Countries</p>
-                      <div className="border-list">
-                        {borders.map(border => {
-                          return (
-                            <Link
-                              key={border.name}
-                              href={`country?callingCode=${
-                                border.callingCodes
-                              }`}
-                            >
-                              <a className="border">{border.name}</a>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </>
-            );
-          }}
-        </Card>
+              </div>
+            )}
+          </div>
+        </div>
       </CountryPageStyles>
     );
   }
