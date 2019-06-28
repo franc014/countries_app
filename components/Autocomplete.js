@@ -92,7 +92,9 @@ class Autocomplete extends Component {
                                   backgroundColor:
                                     highlightedIndex === index
                                       ? "rgba(0, 0, 0, 0.1)"
-                                      : "white",
+                                      : !this.context.state.nightMode
+                                      ? "hsl(0, 0%, 100%)"
+                                      : "hsl(209, 23%, 22%)",
                                   fontWeight:
                                     selectedItem === country ? "bold" : "normal"
                                 }

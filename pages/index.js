@@ -15,15 +15,7 @@ const SearchBarStyles = styled.section`
 `;
 
 class Index extends Component {
-  /* static async getInitialProps() {
-    const res = await fetch("https://restcountries.eu/rest/v2/all");
-    const countries = await res.json();
-    return { countries };
-  } */
-
   render() {
-    /* const countries = this.props.countries; */
-
     return (
       <>
         <CountriesProvider>

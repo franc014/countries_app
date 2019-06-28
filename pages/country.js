@@ -49,6 +49,7 @@ const CountryPageStyles = styled.div`
 
     img {
       display: block;
+
       width: 350px;
       height: 280px;
       flex: 1 1 auto;
@@ -165,11 +166,8 @@ class country extends Component {
   }
 
   render() {
-    /* const country = this.props.countries.shift();
-    console.log(country, "in render...."); */
     const { country, borders } = this.props;
 
-    //console.log(country);
     return (
       <CountryPageStyles nightMode={this.context.state.nightMode}>
         <Link href="/">

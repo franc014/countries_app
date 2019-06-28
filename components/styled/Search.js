@@ -38,7 +38,8 @@ const Search = styled.div`
       height: 20px;
       width: 20px;
       border-radius: 10px;
-      background: white;
+      background: ${props =>
+        props.nightMode ? props.theme.colors.white : props.theme.colors.blue};
     }
 
     & :focus,
@@ -92,15 +93,16 @@ const Search = styled.div`
     width: 80%;
     max-width: 80%;
     border: 1px solid ${props => props.theme.colors.gray_light};
-    border-radius: 10px;
+    border-radius: 5px;
     li {
+      cursor: pointer;
       & :last-child {
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
       }
       & :first-child {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
       }
 
       height: 40px;
