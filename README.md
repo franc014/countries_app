@@ -1,8 +1,9 @@
-#Countries app for Front end mentor challenge
+# Countries app for Front end mentor challenge
+
 You can see the challenge here:
 https://beta.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca
 
-#Links for the challenge solution
+# Links for the challenge solution
 
 - Repo: https://github.com/franc014/countries_app
 - Demo: https://countries-app.franc014.now.sh/
